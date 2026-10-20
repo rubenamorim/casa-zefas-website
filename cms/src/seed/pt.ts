@@ -291,7 +291,7 @@ export default {
           'img:casa-dos-zefas-wc.jpg',
         ],
       },
-      { title: 'A envolvente', images: [] as string[] },
+      { title: 'A envolvente', images: ['img:casa-dos-zefas-exterior.jpg', 'img:casa-dos-zefas-piscina.jpg'] },
     ],
     cta: { title: 'Estas paredes ficam à sua espera.', buttonLabel: 'Reservar estadia' },
     meta: { title: 'Galeria — Villa Zefas', description: 'Fotografias da Casa dos Zefas e da serra do Gerês.' },
