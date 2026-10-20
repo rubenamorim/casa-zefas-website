@@ -72,7 +72,7 @@ function Home() {
             <PageLink
               locale={locale}
               page="contact"
-              hash="reservas"
+              hash="booking"
               className="rounded-[1px] border border-[rgba(244,237,224,.6)] bg-transparent px-[38px] py-[18px] font-sans text-[13px] font-medium uppercase tracking-[.18em] text-linen no-underline transition-colors hover:bg-[rgba(244,237,224,.12)]"
             >
               {hero?.secondaryCta}
@@ -84,7 +84,7 @@ function Home() {
           <PageLink
             locale={locale}
             page="contact"
-            hash="reservas"
+            hash="booking"
             className="mx-auto mt-10 flex max-w-[680px] flex-wrap items-stretch overflow-hidden rounded-[2px] bg-[rgba(246,241,231,.96)] no-underline shadow-[0_24px_60px_-28px_rgba(20,28,24,.6)] backdrop-blur-[6px]"
           >
             {[hero?.arrivalLabel, hero?.departureLabel].map((label, i) => (
@@ -254,7 +254,7 @@ function Home() {
             <Lines text={cta?.text} />
           </p>
           <div className="mt-[42px] flex flex-wrap justify-center gap-4">
-            <PageLink locale={locale} page="contact" hash="reservas" className={btnLight}>
+            <PageLink locale={locale} page="contact" hash="booking" className={btnLight}>
               {cta?.buttonLabel}
             </PageLink>
             {site?.instagramUrl && (

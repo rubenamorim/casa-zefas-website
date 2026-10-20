@@ -5610,8 +5610,8 @@
       "name": "_locales",
       "schema": "public",
       "values": [
-        "en",
         "pt",
+        "en",
         "es"
       ]
     }
@@ -5626,6 +5626,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "311fcf27-89e6-4616-ad89-3fb61aca14bd",
+  "id": "f53a1da3-63bc-48f0-b540-7115ef1333ab",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

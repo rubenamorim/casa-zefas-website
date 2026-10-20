@@ -23,12 +23,12 @@ export default buildConfig({
   i18n: { supportedLanguages: { pt, en }, fallbackLanguage: 'pt' },
   localization: {
     locales: [
-      { code: 'en', label: 'English' },
       { code: 'pt', label: 'Português' },
+      { code: 'en', label: 'English' },
       { code: 'es', label: 'Español' },
     ],
-    // Site default (served at /). Admin UI itself stays in Portuguese for the editor.
-    defaultLocale: 'en',
+    // Site default (served at /).
+    defaultLocale: 'pt',
     fallback: true,
   },
   collections: [Units, Media, Users],

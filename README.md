@@ -1,6 +1,6 @@
 # Villa Zefas website
 
-- `web/` — public site. TanStack Start + Tailwind v4, SSR, EN (default, `/`) / PT (`/pt`) / ES (`/es`). Slugs are the same in every language.
+- `web/` — public site. TanStack Start + Tailwind v4, SSR, PT (default, `/`) / EN (`/en`) / ES (`/es`). Slugs are English in every language (`/stay`, `/house`, `/geres`, `/gallery`, `/contact`).
 - `cms/` — Payload CMS (Next.js + Postgres). Every text and image on the site is edited here, per language.
 
 ## Local dev

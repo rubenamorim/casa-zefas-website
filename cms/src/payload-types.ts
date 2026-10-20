@@ -88,7 +88,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'pt' | 'es') | ('en' | 'pt' | 'es')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('pt' | 'en' | 'es') | ('pt' | 'en' | 'es')[];
   globals: {
     site: Site;
     home: Home;
@@ -107,7 +107,7 @@ export interface Config {
     gallery: GallerySelect<false> | GallerySelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
   };
-  locale: 'en' | 'pt' | 'es';
+  locale: 'pt' | 'en' | 'es';
   widgets: {
     collections: CollectionsWidget;
   };

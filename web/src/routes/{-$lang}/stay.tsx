@@ -6,7 +6,7 @@ import { Amenities, Img, PageHero, PageLink, btnSolid, h2, useSite } from '#/com
 import { getUnits, loadGlobal, media, mediaList, type Unit } from '#/lib/cms'
 import { seo } from '#/lib/site'
 
-export const Route = createFileRoute('/{-$lang}/alojamento')({
+export const Route = createFileRoute('/{-$lang}/stay')({
   loader: async ({ context: { locale } }) => {
     const [page, units] = await Promise.all([loadGlobal('stay', locale), getUnits({ data: locale })])
     return { page, units, locale }
@@ -72,7 +72,7 @@ function Stay() {
                     {u.comingSoon ? (
                       <span className="font-sans text-xs font-medium uppercase tracking-[.16em] text-bronze">{labels?.soonNote}</span>
                     ) : (
-                      <PageLink locale={locale} page="contact" hash="reservas" className={`${btnSolid} ml-auto !px-8 !py-[15px] !text-[12.5px]`}>
+                      <PageLink locale={locale} page="contact" hash="booking" className={`${btnSolid} ml-auto !px-8 !py-[15px] !text-[12.5px]`}>
                         {labels?.book}
                       </PageLink>
                     )}
@@ -90,7 +90,7 @@ function Stay() {
         <div className="mx-auto max-w-[680px]">
           <h2 className={`${h2} text-[clamp(32px,4.6vw,52px)] leading-[1.06]`}>{cta?.title}</h2>
           <p className="mx-auto mt-5 mb-0 max-w-[46ch] font-sans text-base font-light leading-[1.8] text-body">{cta?.text}</p>
-          <PageLink locale={locale} page="contact" hash="reservas" className={`${btnSolid} mt-[34px]`}>
+          <PageLink locale={locale} page="contact" hash="booking" className={`${btnSolid} mt-[34px]`}>
             {cta?.buttonLabel}
           </PageLink>
         </div>

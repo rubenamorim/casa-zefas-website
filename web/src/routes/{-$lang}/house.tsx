@@ -4,7 +4,7 @@ import { Eyebrow, Img, PageHero, h2, useSite } from '#/components/ui'
 import { loadGlobal, media } from '#/lib/cms'
 import { seo } from '#/lib/site'
 
-export const Route = createFileRoute('/{-$lang}/a-casa')({
+export const Route = createFileRoute('/{-$lang}/house')({
   loader: async ({ context: { locale } }) => ({ page: await loadGlobal('house', locale), locale }),
   head: ({ loaderData: d }) =>
     d ? seo({ locale: d.locale, page: 'house', title: d.page.meta?.title, description: d.page.meta?.description, image: media(d.page.hero?.image) }) : {},

@@ -2,7 +2,7 @@ import { Link, useLocation } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
 import { defaultLocale, locales, media, type Globals, type Locale } from '#/lib/cms'
-import { pageKeys, type PageKey } from '#/lib/site'
+import { pageKeys, pages, type PageKey } from '#/lib/site'
 import { Img, PageLink } from './ui'
 
 const langNames = { pt: 'Português', en: 'English', es: 'Español' }
@@ -27,14 +27,10 @@ export function Header({ site, locale }: { site: Globals['site']; locale: Locale
     document.body.style.overflow = menuOpen ? 'hidden' : ''
   }, [menuOpen])
 
-  // Same page in another language: swap the /pt or /es prefix.
-  const rest = pathname.replace(/^\/(pt|es)(?=\/|$)/, '') || '/'
+  // Same page in another language: swap the /en or /es prefix.
+  const rest = pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/'
   const langHref = (l: Locale) => (l === defaultLocale ? rest : `/${l}${rest === '/' ? '' : rest}`)
-  const isActive = (page: PageKey) => {
-    const seg = rest.split('/')[1] ?? ''
-    const slug = { home: '', stay: 'alojamento', house: 'a-casa', geres: 'geres', gallery: 'galeria', contact: 'contactos' }[page]
-    return seg === slug
-  }
+  const isActive = (page: PageKey) => (rest.split('/')[1] ?? '') === pages[page].slug
 
   const solid = scrolled
   const fg = solid ? 'text-forest' : 'text-linen'
@@ -79,7 +75,7 @@ export function Header({ site, locale }: { site: Globals['site']; locale: Locale
         <PageLink
           locale={locale}
           page="contact"
-          hash="reservas"
+          hash="booking"
           className={`ml-1.5 rounded-[1px] border px-[26px] py-3 font-sans text-xs font-medium uppercase tracking-[.17em] no-underline transition-colors duration-[450ms] hover:opacity-90 ${
             solid ? 'border-forest bg-forest text-linen' : 'border-[rgba(244,237,224,.55)] bg-transparent text-white'
           }`}
@@ -158,7 +154,7 @@ export function Header({ site, locale }: { site: Globals['site']; locale: Locale
             <PageLink
               locale={locale}
               page="contact"
-              hash="reservas"
+              hash="booking"
               className="rounded-[1px] bg-forest px-[30px] py-3.5 font-sans text-[12.5px] font-medium uppercase tracking-[.18em] text-linen no-underline"
             >
               {site.bookLabel}

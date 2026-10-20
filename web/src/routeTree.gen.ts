@@ -13,11 +13,11 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char123LangChar125RouteRouteImport } from './routes/{-$lang}/route'
 import { Route as Char123LangChar125IndexRouteImport } from './routes/{-$lang}/index'
-import { Route as Char123LangChar125ACasaRouteImport } from './routes/{-$lang}/a-casa'
-import { Route as Char123LangChar125AlojamentoRouteImport } from './routes/{-$lang}/alojamento'
-import { Route as Char123LangChar125ContactosRouteImport } from './routes/{-$lang}/contactos'
-import { Route as Char123LangChar125GaleriaRouteImport } from './routes/{-$lang}/galeria'
+import { Route as Char123LangChar125ContactRouteImport } from './routes/{-$lang}/contact'
+import { Route as Char123LangChar125GalleryRouteImport } from './routes/{-$lang}/gallery'
 import { Route as Char123LangChar125GeresRouteImport } from './routes/{-$lang}/geres'
+import { Route as Char123LangChar125HouseRouteImport } from './routes/{-$lang}/house'
+import { Route as Char123LangChar125StayRouteImport } from './routes/{-$lang}/stay'
 
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
@@ -39,27 +39,16 @@ const Char123LangChar125IndexRoute = Char123LangChar125IndexRouteImport.update({
   path: '/',
   getParentRoute: () => Char123LangChar125RouteRoute,
 } as any)
-const Char123LangChar125ACasaRoute = Char123LangChar125ACasaRouteImport.update({
-  id: '/a-casa',
-  path: '/a-casa',
-  getParentRoute: () => Char123LangChar125RouteRoute,
-} as any)
-const Char123LangChar125AlojamentoRoute =
-  Char123LangChar125AlojamentoRouteImport.update({
-    id: '/alojamento',
-    path: '/alojamento',
+const Char123LangChar125ContactRoute =
+  Char123LangChar125ContactRouteImport.update({
+    id: '/contact',
+    path: '/contact',
     getParentRoute: () => Char123LangChar125RouteRoute,
   } as any)
-const Char123LangChar125ContactosRoute =
-  Char123LangChar125ContactosRouteImport.update({
-    id: '/contactos',
-    path: '/contactos',
-    getParentRoute: () => Char123LangChar125RouteRoute,
-  } as any)
-const Char123LangChar125GaleriaRoute =
-  Char123LangChar125GaleriaRouteImport.update({
-    id: '/galeria',
-    path: '/galeria',
+const Char123LangChar125GalleryRoute =
+  Char123LangChar125GalleryRouteImport.update({
+    id: '/gallery',
+    path: '/gallery',
     getParentRoute: () => Char123LangChar125RouteRoute,
   } as any)
 const Char123LangChar125GeresRoute = Char123LangChar125GeresRouteImport.update({
@@ -67,26 +56,36 @@ const Char123LangChar125GeresRoute = Char123LangChar125GeresRouteImport.update({
   path: '/geres',
   getParentRoute: () => Char123LangChar125RouteRoute,
 } as any)
+const Char123LangChar125HouseRoute = Char123LangChar125HouseRouteImport.update({
+  id: '/house',
+  path: '/house',
+  getParentRoute: () => Char123LangChar125RouteRoute,
+} as any)
+const Char123LangChar125StayRoute = Char123LangChar125StayRouteImport.update({
+  id: '/stay',
+  path: '/stay',
+  getParentRoute: () => Char123LangChar125RouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/{-$lang}': typeof Char123LangChar125RouteRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/{-$lang}/a-casa': typeof Char123LangChar125ACasaRoute
-  '/{-$lang}/alojamento': typeof Char123LangChar125AlojamentoRoute
-  '/{-$lang}/contactos': typeof Char123LangChar125ContactosRoute
-  '/{-$lang}/galeria': typeof Char123LangChar125GaleriaRoute
+  '/{-$lang}/contact': typeof Char123LangChar125ContactRoute
+  '/{-$lang}/gallery': typeof Char123LangChar125GalleryRoute
   '/{-$lang}/geres': typeof Char123LangChar125GeresRoute
+  '/{-$lang}/house': typeof Char123LangChar125HouseRoute
+  '/{-$lang}/stay': typeof Char123LangChar125StayRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
 }
 export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/{-$lang}/a-casa': typeof Char123LangChar125ACasaRoute
-  '/{-$lang}/alojamento': typeof Char123LangChar125AlojamentoRoute
-  '/{-$lang}/contactos': typeof Char123LangChar125ContactosRoute
-  '/{-$lang}/galeria': typeof Char123LangChar125GaleriaRoute
+  '/{-$lang}/contact': typeof Char123LangChar125ContactRoute
+  '/{-$lang}/gallery': typeof Char123LangChar125GalleryRoute
   '/{-$lang}/geres': typeof Char123LangChar125GeresRoute
+  '/{-$lang}/house': typeof Char123LangChar125HouseRoute
+  '/{-$lang}/stay': typeof Char123LangChar125StayRoute
   '/{-$lang}': typeof Char123LangChar125IndexRoute
 }
 export interface FileRoutesById {
@@ -94,11 +93,11 @@ export interface FileRoutesById {
   '/{-$lang}': typeof Char123LangChar125RouteRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/{-$lang}/a-casa': typeof Char123LangChar125ACasaRoute
-  '/{-$lang}/alojamento': typeof Char123LangChar125AlojamentoRoute
-  '/{-$lang}/contactos': typeof Char123LangChar125ContactosRoute
-  '/{-$lang}/galeria': typeof Char123LangChar125GaleriaRoute
+  '/{-$lang}/contact': typeof Char123LangChar125ContactRoute
+  '/{-$lang}/gallery': typeof Char123LangChar125GalleryRoute
   '/{-$lang}/geres': typeof Char123LangChar125GeresRoute
+  '/{-$lang}/house': typeof Char123LangChar125HouseRoute
+  '/{-$lang}/stay': typeof Char123LangChar125StayRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
 }
 export interface FileRouteTypes {
@@ -107,32 +106,32 @@ export interface FileRouteTypes {
     | '/{-$lang}'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/{-$lang}/a-casa'
-    | '/{-$lang}/alojamento'
-    | '/{-$lang}/contactos'
-    | '/{-$lang}/galeria'
+    | '/{-$lang}/contact'
+    | '/{-$lang}/gallery'
     | '/{-$lang}/geres'
+    | '/{-$lang}/house'
+    | '/{-$lang}/stay'
     | '/{-$lang}/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/{-$lang}/a-casa'
-    | '/{-$lang}/alojamento'
-    | '/{-$lang}/contactos'
-    | '/{-$lang}/galeria'
+    | '/{-$lang}/contact'
+    | '/{-$lang}/gallery'
     | '/{-$lang}/geres'
+    | '/{-$lang}/house'
+    | '/{-$lang}/stay'
     | '/{-$lang}'
   id:
     | '__root__'
     | '/{-$lang}'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/{-$lang}/a-casa'
-    | '/{-$lang}/alojamento'
-    | '/{-$lang}/contactos'
-    | '/{-$lang}/galeria'
+    | '/{-$lang}/contact'
+    | '/{-$lang}/gallery'
     | '/{-$lang}/geres'
+    | '/{-$lang}/house'
+    | '/{-$lang}/stay'
     | '/{-$lang}/'
   fileRoutesById: FileRoutesById
 }
@@ -172,32 +171,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LangChar125IndexRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
-    '/{-$lang}/a-casa': {
-      id: '/{-$lang}/a-casa'
-      path: '/a-casa'
-      fullPath: '/{-$lang}/a-casa'
-      preLoaderRoute: typeof Char123LangChar125ACasaRouteImport
+    '/{-$lang}/contact': {
+      id: '/{-$lang}/contact'
+      path: '/contact'
+      fullPath: '/{-$lang}/contact'
+      preLoaderRoute: typeof Char123LangChar125ContactRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
-    '/{-$lang}/alojamento': {
-      id: '/{-$lang}/alojamento'
-      path: '/alojamento'
-      fullPath: '/{-$lang}/alojamento'
-      preLoaderRoute: typeof Char123LangChar125AlojamentoRouteImport
-      parentRoute: typeof Char123LangChar125RouteRoute
-    }
-    '/{-$lang}/contactos': {
-      id: '/{-$lang}/contactos'
-      path: '/contactos'
-      fullPath: '/{-$lang}/contactos'
-      preLoaderRoute: typeof Char123LangChar125ContactosRouteImport
-      parentRoute: typeof Char123LangChar125RouteRoute
-    }
-    '/{-$lang}/galeria': {
-      id: '/{-$lang}/galeria'
-      path: '/galeria'
-      fullPath: '/{-$lang}/galeria'
-      preLoaderRoute: typeof Char123LangChar125GaleriaRouteImport
+    '/{-$lang}/gallery': {
+      id: '/{-$lang}/gallery'
+      path: '/gallery'
+      fullPath: '/{-$lang}/gallery'
+      preLoaderRoute: typeof Char123LangChar125GalleryRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
     '/{-$lang}/geres': {
@@ -207,25 +192,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LangChar125GeresRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
+    '/{-$lang}/house': {
+      id: '/{-$lang}/house'
+      path: '/house'
+      fullPath: '/{-$lang}/house'
+      preLoaderRoute: typeof Char123LangChar125HouseRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
+    '/{-$lang}/stay': {
+      id: '/{-$lang}/stay'
+      path: '/stay'
+      fullPath: '/{-$lang}/stay'
+      preLoaderRoute: typeof Char123LangChar125StayRouteImport
+      parentRoute: typeof Char123LangChar125RouteRoute
+    }
   }
 }
 
 interface Char123LangChar125RouteRouteChildren {
-  Char123LangChar125ACasaRoute: typeof Char123LangChar125ACasaRoute
-  Char123LangChar125AlojamentoRoute: typeof Char123LangChar125AlojamentoRoute
-  Char123LangChar125ContactosRoute: typeof Char123LangChar125ContactosRoute
-  Char123LangChar125GaleriaRoute: typeof Char123LangChar125GaleriaRoute
+  Char123LangChar125ContactRoute: typeof Char123LangChar125ContactRoute
+  Char123LangChar125GalleryRoute: typeof Char123LangChar125GalleryRoute
   Char123LangChar125GeresRoute: typeof Char123LangChar125GeresRoute
+  Char123LangChar125HouseRoute: typeof Char123LangChar125HouseRoute
+  Char123LangChar125StayRoute: typeof Char123LangChar125StayRoute
   Char123LangChar125IndexRoute: typeof Char123LangChar125IndexRoute
 }
 
 const Char123LangChar125RouteRouteChildren: Char123LangChar125RouteRouteChildren =
   {
-    Char123LangChar125ACasaRoute: Char123LangChar125ACasaRoute,
-    Char123LangChar125AlojamentoRoute: Char123LangChar125AlojamentoRoute,
-    Char123LangChar125ContactosRoute: Char123LangChar125ContactosRoute,
-    Char123LangChar125GaleriaRoute: Char123LangChar125GaleriaRoute,
+    Char123LangChar125ContactRoute: Char123LangChar125ContactRoute,
+    Char123LangChar125GalleryRoute: Char123LangChar125GalleryRoute,
     Char123LangChar125GeresRoute: Char123LangChar125GeresRoute,
+    Char123LangChar125HouseRoute: Char123LangChar125HouseRoute,
+    Char123LangChar125StayRoute: Char123LangChar125StayRoute,
     Char123LangChar125IndexRoute: Char123LangChar125IndexRoute,
   }
 

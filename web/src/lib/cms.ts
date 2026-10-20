@@ -4,8 +4,8 @@ import { notFound } from '@tanstack/react-router'
 import type { Config, Media, Unit } from '../../../cms/src/payload-types'
 
 export type Locale = 'pt' | 'en' | 'es'
-export const locales: Locale[] = ['en', 'pt', 'es']
-export const defaultLocale: Locale = 'en'
+export const locales: Locale[] = ['pt', 'en', 'es']
+export const defaultLocale: Locale = 'pt'
 export type Globals = Config['globals']
 export type GlobalSlug = keyof Globals
 export type { Media, Unit }
@@ -36,7 +36,7 @@ async function get<T>(path: string): Promise<T> {
 
 export const toLocale = (lang: string | undefined): Locale => {
   if (lang === undefined) return defaultLocale
-  if (lang === 'pt' || lang === 'es') return lang
+  if (lang === 'en' || lang === 'es') return lang
   throw notFound()
 }
 

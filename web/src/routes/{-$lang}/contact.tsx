@@ -5,7 +5,7 @@ import { Eyebrow, Img, Lines, PageHero, h2, useSite } from '#/components/ui'
 import { loadGlobal, media } from '#/lib/cms'
 import { seo } from '#/lib/site'
 
-export const Route = createFileRoute('/{-$lang}/contactos')({
+export const Route = createFileRoute('/{-$lang}/contact')({
   loader: async ({ context: { locale } }) => ({ page: await loadGlobal('contact', locale), locale }),
   head: ({ loaderData: d }) =>
     d ? seo({ locale: d.locale, page: 'contact', title: d.page.meta?.title, description: d.page.meta?.description, image: media(d.page.hero?.image) }) : {},
@@ -30,7 +30,7 @@ function Contact() {
     <>
       <PageHero image={media(hero?.image)} eyebrow={hero?.eyebrow} title={hero?.title} minH="min-h-[52vh]" />
 
-      <section id="reservas" className="bg-cream px-[clamp(20px,6vw,72px)] py-[clamp(72px,9vw,130px)]">
+      <section id="booking" className="bg-cream px-[clamp(20px,6vw,72px)] py-[clamp(72px,9vw,130px)]">
         <div className="mx-auto flex max-w-[1080px] flex-wrap items-start gap-[clamp(36px,4vw,64px)]">
           <div className="min-w-[min(300px,100%)] flex-[1_1_360px]">
             <Eyebrow className="mb-[22px]">{booking?.eyebrow}</Eyebrow>

@@ -6,7 +6,7 @@ import { Img, PageHero, PageLink, btnLight } from '#/components/ui'
 import { loadGlobal, media, mediaList, type Media } from '#/lib/cms'
 import { seo } from '#/lib/site'
 
-export const Route = createFileRoute('/{-$lang}/galeria')({
+export const Route = createFileRoute('/{-$lang}/gallery')({
   loader: async ({ context: { locale } }) => ({ page: await loadGlobal('gallery', locale), locale }),
   head: ({ loaderData: d }) =>
     d ? seo({ locale: d.locale, page: 'gallery', title: d.page.meta?.title, description: d.page.meta?.description, image: media(d.page.hero?.image) }) : {},
@@ -49,7 +49,7 @@ function Gallery() {
       <section className="bg-forest px-[clamp(20px,6vw,72px)] py-[clamp(72px,8vw,120px)] text-center">
         <div className="mx-auto max-w-[680px]">
           <h2 className="m-0 font-serif text-[clamp(32px,4.6vw,52px)] font-medium leading-[1.06] text-linen">{cta?.title}</h2>
-          <PageLink locale={locale} page="contact" hash="reservas" className={`${btnLight} mt-8 !px-[42px]`}>
+          <PageLink locale={locale} page="contact" hash="booking" className={`${btnLight} mt-8 !px-[42px]`}>
             {cta?.buttonLabel}
           </PageLink>
         </div>

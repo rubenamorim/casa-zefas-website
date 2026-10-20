@@ -26,7 +26,7 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { lang } = useParams({ strict: false })
   return (
-    <html lang={lang === 'pt' || lang === 'es' ? lang : 'en'}>
+    <html lang={lang === 'en' || lang === 'es' ? lang : 'pt'}>
       <head>
         {/* Enables scroll-reveal CSS only when JS runs, so content never stays hidden. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />

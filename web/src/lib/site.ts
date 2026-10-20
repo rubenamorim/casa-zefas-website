@@ -5,11 +5,11 @@ export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://casazefas.pt'
 
 export const pages = {
   home: { route: '/{-$lang}', slug: '' },
-  stay: { route: '/{-$lang}/alojamento', slug: 'alojamento' },
-  house: { route: '/{-$lang}/a-casa', slug: 'a-casa' },
+  stay: { route: '/{-$lang}/stay', slug: 'stay' },
+  house: { route: '/{-$lang}/house', slug: 'house' },
   geres: { route: '/{-$lang}/geres', slug: 'geres' },
-  gallery: { route: '/{-$lang}/galeria', slug: 'galeria' },
-  contact: { route: '/{-$lang}/contactos', slug: 'contactos' },
+  gallery: { route: '/{-$lang}/gallery', slug: 'gallery' },
+  contact: { route: '/{-$lang}/contact', slug: 'contact' },
 } as const
 export type PageKey = keyof typeof pages
 export const pageKeys = Object.keys(pages) as PageKey[]

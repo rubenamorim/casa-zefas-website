@@ -60,7 +60,7 @@ function Geres() {
       <section className="bg-sand px-[clamp(20px,6vw,72px)] py-[clamp(72px,8vw,120px)] text-center">
         <div data-reveal className="mx-auto max-w-[700px]">
           <h2 className={`${h2} text-[clamp(32px,4.8vw,56px)] leading-[1.05]`}>{cta?.title}</h2>
-          <PageLink locale={locale} page="contact" hash="reservas" className={`${btnSolid} mt-[34px] !px-[42px] !py-[18px]`}>
+          <PageLink locale={locale} page="contact" hash="booking" className={`${btnSolid} mt-[34px] !px-[42px] !py-[18px]`}>
             {cta?.buttonLabel}
           </PageLink>
         </div>
