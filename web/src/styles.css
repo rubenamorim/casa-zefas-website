@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Jost', sans-serif;
+
+  --color-cream: #f6f1e7;
+  --color-sand: #efe7d7;
+  --color-paper: #faf6ec;
+  --color-card: #fbf8f1;
+  --color-linen: #f4ede0;
+  --color-forest: #33473f;
+  --color-forest-dark: #26352f;
+  --color-deep: #232f2b;
+  --color-night: #243029;
+  --color-ink: #2c3a35;
+  --color-text: #2b342f;
+  --color-body: #586259;
+  --color-moss: #3f4d45;
+  --color-sage: #7c8c82;
+  --color-mist: #9bb0a3;
+  --color-bronze: #8a6b3e;
+  --color-gold: #b89055;
+  --color-rule: #b9ad95;
+
+  --ease-soft: cubic-bezier(0.16, 0.7, 0.13, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: var(--color-forest);
+  color: var(--color-cream);
+}
+
+/* Scroll reveal: only hidden when JS is running (class set in <head>). */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s var(--ease-soft),
+    transform 1s var(--ease-soft);
+}
+.js [data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.09); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .animate-kenburns { animation: none !important; }
+}
