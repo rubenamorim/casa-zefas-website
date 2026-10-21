@@ -10,7 +10,6 @@ export const Media: CollectionConfig = {
     { name: 'seedKey', type: 'text', index: true, admin: { hidden: true } },
   ],
   upload: {
-    staticDir: process.env.MEDIA_DIR || 'media',
     mimeTypes: ['image/*'],
     focalPoint: true,
     imageSizes: [

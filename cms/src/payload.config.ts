@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { pt } from '@payloadcms/translations/languages/pt'
 import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
@@ -41,4 +42,20 @@ export default buildConfig({
     pool: { connectionString: process.env.DATABASE_URL || '' },
   }),
   sharp,
+  // Prod: Railway bucket (private; files served through Payload). Dev: local ./media when BUCKET unset.
+  plugins: [
+    s3Storage({
+      enabled: !!process.env.BUCKET,
+      collections: { media: true },
+      bucket: process.env.BUCKET || '',
+      config: {
+        endpoint: process.env.ENDPOINT,
+        region: process.env.REGION,
+        credentials: {
+          accessKeyId: process.env.ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.SECRET_ACCESS_KEY || '',
+        },
+      },
+    }),
+  ],
 })

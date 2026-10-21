@@ -21,13 +21,16 @@ Photos: drop the design's `assets/*.jpg` into `cms/src/seed/images/` before `pnp
 
 ## Deploy (Railway)
 
-One project, three services:
+Infra is code: `.railway/railway.ts` (Postgres, `media` bucket, `cms`, `web`, domains, env).
 
-| Service | Root dir | Notes |
-|---|---|---|
-| Postgres | — | Railway Postgres template |
-| `cms` | `cms` | Env: `DATABASE_URL`, `PAYLOAD_SECRET`, `WEB_URL=https://casazefas.pt`, `MEDIA_DIR=/app/media`. Mount a **volume at `/app/media`** (uploaded images). `start` runs migrations first. Domain: `cms.casazefas.pt`. |
-| `web` | `web` | Env: `CMS_URL` (private: `http://${{cms.RAILWAY_PRIVATE_DOMAIN}}:${{cms.PORT}}`), `CMS_PUBLIC_URL=https://cms.casazefas.pt`, `VITE_SITE_URL=https://casazefas.pt`. Domain: `casazefas.pt`. |
+```sh
+pnpm i && railway login && railway link
+railway config plan    # preview
+railway config apply
+```
+
+Set `PAYLOAD_SECRET` on the `cms` service once in the Railway dashboard (kept via `preserve()`, never in git).
+DNS: point `casazefas.pt` and `cms.casazefas.pt` at the records Railway shows for each domain.
 
 First deploy: run `pnpm seed` once against the prod DB (Railway shell or `railway run pnpm seed` in `cms/`) with
 `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` set — that becomes the editor's login. More users: Admin → Utilizadores.
