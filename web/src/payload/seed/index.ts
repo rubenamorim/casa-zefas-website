@@ -17,14 +17,14 @@ const mediaIds = new Map<string, string | number | null>()
 
 async function media(file: string) {
   if (mediaIds.has(file)) return mediaIds.get(file)!
-  const existing = await payload.find({ collection: 'media', where: { seedKey: { equals: file } }, limit: 1 })
+  const existing = await payload.find({ overrideAccess: true, collection: 'media', where: { seedKey: { equals: file } }, limit: 1 })
   let id: string | number | null = existing.docs[0]?.id ?? null
   const filePath = path.join(dir, file)
   if (!id && fs.existsSync(filePath)) {
     const alt = file.replace(/\.\w+$/, '').replace(/-/g, ' ')
-    id = (await payload.create({ collection: 'media', data: { alt, seedKey: file }, filePath })).id
+    id = (await payload.create({ overrideAccess: true, collection: 'media', data: { alt, seedKey: file }, filePath })).id
   }
-  if (!id) payload.logger.warn(`Image missing, skipped: ${file} (drop it in src/seed/images)`)
+  if (!id) payload.logger.warn(`Image missing, skipped: ${file} (drop it in src/payload/seed/images)`)
   mediaIds.set(file, id)
   return id
 }
@@ -70,33 +70,33 @@ const translations = { en: await loadLocale('en'), es: await loadLocale('es') }
 const globals = ['site', 'home', 'stay', 'house', 'geres', 'gallery', 'contact'] as const
 
 for (const slug of globals) {
-  const base = await payload.updateGlobal({ slug, locale: 'pt', data: await resolve(pt[slug]), depth: 0 })
+  const base = await payload.updateGlobal({ overrideAccess: true, slug, locale: 'pt', data: await resolve(pt[slug]), depth: 0 })
   for (const [locale, content] of Object.entries(translations)) {
     if (!content) continue
-    await payload.updateGlobal({ slug, locale: locale as Locale, data: withIds(base, await resolve(content[slug])) })
+    await payload.updateGlobal({ overrideAccess: true, slug, locale: locale as Locale, data: withIds(base, await resolve(content[slug])) })
   }
   payload.logger.info(`Seeded global: ${slug}`)
 }
 
 for (const [i, unit] of pt.units.entries()) {
-  const found = await payload.find({ collection: 'units', where: { order: { equals: unit.order } }, limit: 1 })
+  const found = await payload.find({ overrideAccess: true, collection: 'units', where: { order: { equals: unit.order } }, limit: 1 })
   const data = await resolve(unit)
   const base = found.docs[0]
-    ? await payload.update({ collection: 'units', id: found.docs[0].id, locale: 'pt', data, depth: 0 })
-    : await payload.create({ collection: 'units', locale: 'pt', data, depth: 0 })
+    ? await payload.update({ overrideAccess: true, collection: 'units', id: found.docs[0].id, locale: 'pt', data, depth: 0 })
+    : await payload.create({ overrideAccess: true, collection: 'units', locale: 'pt', data, depth: 0 })
   for (const [locale, content] of Object.entries(translations)) {
     if (!content) continue
     const tr = await resolve(content.units[i])
-    await payload.update({ collection: 'units', id: base.id, locale: locale as Locale, data: withIds(base, tr) })
+    await payload.update({ overrideAccess: true, collection: 'units', id: base.id, locale: locale as Locale, data: withIds(base, tr) })
   }
   payload.logger.info(`Seeded unit: ${unit.name}`)
 }
 
 const { SEED_ADMIN_EMAIL: email, SEED_ADMIN_PASSWORD: password } = process.env
 if (email && password) {
-  const exists = await payload.find({ collection: 'users', where: { email: { equals: email } }, limit: 1 })
+  const exists = await payload.find({ overrideAccess: true, collection: 'users', where: { email: { equals: email } }, limit: 1 })
   if (!exists.docs.length) {
-    await payload.create({ collection: 'users', data: { email, password } })
+    await payload.create({ overrideAccess: true, collection: 'users', data: { email, password } })
     payload.logger.info(`Created editor account: ${email}`)
   }
 }

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+// Image variants and webp conversion live in sharpTransformer (payload.config.ts).
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: 'Imagem', plural: 'Imagens' },
@@ -9,14 +10,5 @@ export const Media: CollectionConfig = {
     // Used by the seed script to avoid re-uploading the same file.
     { name: 'seedKey', type: 'text', index: true, admin: { hidden: true } },
   ],
-  upload: {
-    mimeTypes: ['image/*'],
-    focalPoint: true,
-    imageSizes: [
-      { name: 'thumb', width: 640 },
-      { name: 'large', width: 1600 },
-      { name: 'xl', width: 2400 },
-    ],
-    formatOptions: { format: 'webp', options: { quality: 82 } },
-  },
+  upload: { mimeTypes: ['image/*'] },
 }

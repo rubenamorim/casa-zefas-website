@@ -6,7 +6,7 @@ import { langParam, pages, type PageKey } from '#/lib/site'
 
 export function Img({ m, className = '', sizes = '100vw', eager }: { m?: Media; className?: string; sizes?: string; eager?: boolean }) {
   if (!m?.url) return <div className={`bg-[#e7ddc9] ${className}`} />
-  const s = m.sizes
+  const s = m.variants
   const srcSet = [s?.thumb, s?.large, s?.xl]
     .filter((v) => v?.url && v.width)
     .map((v) => `${v!.url} ${v!.width}w`)

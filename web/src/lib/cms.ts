@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { notFound } from '@tanstack/react-router'
 
-import type { Config, Media, Unit } from '../../../cms/src/payload-types'
+import type { Config, Media, Unit } from '#/payload/payload-types'
 
 export type Locale = 'pt' | 'en' | 'es'
 export const locales: Locale[] = ['pt', 'en', 'es']
@@ -10,28 +10,11 @@ export type Globals = Config['globals']
 export type GlobalSlug = keyof Globals
 export type { Media, Unit }
 
-// CMS_URL: how this server reaches the CMS (can be a private network URL).
-// CMS_PUBLIC_URL: how browsers reach CMS images. Defaults to CMS_URL.
-const cmsUrl = () => process.env.CMS_URL || 'http://localhost:3001'
-const publicUrl = () => process.env.CMS_PUBLIC_URL || cmsUrl()
-
-// Payload returns relative media URLs; make them absolute for the browser.
-function absolutize(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(absolutize)
-  if (value && typeof value === 'object') {
-    const out: Record<string, unknown> = {}
-    for (const [k, v] of Object.entries(value)) {
-      out[k] = k === 'url' && typeof v === 'string' && v.startsWith('/') ? publicUrl() + v : absolutize(v)
-    }
-    return out
-  }
-  return value
-}
-
-async function get<T>(path: string): Promise<T> {
-  const res = await fetch(cmsUrl() + path)
-  if (!res.ok) throw new Error(`CMS ${res.status} on ${path}`)
-  return absolutize(await res.json()) as T
+// Payload runs in this same server, so content is read via its Local API (no HTTP).
+// Imported lazily to keep Payload out of the client bundle.
+const payload = async () => {
+  const [{ getPayload }, { default: config }] = await Promise.all([import('payload'), import('@payload-config')])
+  return getPayload({ config })
 }
 
 export const toLocale = (lang: string | undefined): Locale => {
@@ -42,12 +25,21 @@ export const toLocale = (lang: string | undefined): Locale => {
 
 export const getGlobal = createServerFn({ method: 'GET' })
   .validator((d: { slug: GlobalSlug; locale: Locale }) => d)
-  .handler(({ data }) => get<Globals[typeof data.slug]>(`/api/globals/${data.slug}?locale=${data.locale}&depth=1`))
+  .handler(async ({ data }) =>
+    (await payload()).findGlobal({ slug: data.slug, locale: data.locale, depth: 1, overrideAccess: true }),
+  )
 
 export const getUnits = createServerFn({ method: 'GET' })
   .validator((locale: Locale) => locale)
   .handler(async ({ data }) => {
-    const res = await get<{ docs: Unit[] }>(`/api/units?locale=${data}&sort=order&depth=1&limit=50`)
+    const res = await (await payload()).find({
+      collection: 'units',
+      locale: data,
+      sort: 'order',
+      depth: 1,
+      limit: 50,
+      overrideAccess: true,
+    })
     return res.docs
   })
 

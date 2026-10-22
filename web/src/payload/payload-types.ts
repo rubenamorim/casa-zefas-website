@@ -74,6 +74,7 @@ export interface Config {
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
+    'payload-llm-instructions': PayloadLlmInstruction;
   };
   collectionsJoins: {};
   collectionsSelect: {
@@ -84,6 +85,7 @@ export interface Config {
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    'payload-llm-instructions': PayloadLlmInstructionsSelect<false> | PayloadLlmInstructionsSelect<true>;
   };
   db: {
     defaultIDType: number;
@@ -109,7 +111,11 @@ export interface Config {
   };
   locale: 'pt' | 'en' | 'es';
   widgets: {
+    welcome: WelcomeWidget;
     collections: CollectionsWidget;
+    'collection-query': CollectionQueryWidget;
+    activity: ActivityWidget;
+    'upload-dropzone': UploadDropzoneWidget;
   };
   user: User;
   jobs: {
@@ -158,6 +164,14 @@ export interface Unit {
         id?: string | null;
       }[]
     | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -169,6 +183,16 @@ export interface Media {
   id: number;
   alt?: string | null;
   seedKey?: string | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -178,9 +202,19 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+  original?: {
+    filename?: string | null;
+    url?: string | null;
+    mimeType?: string | null;
+    filesize?: number | null;
+    width?: number | null;
+    height?: number | null;
+    prefix?: string | null;
+    _objectKey?: string | null;
+  };
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
+  variants?: {
     thumb?: {
       url?: string | null;
       width?: number | null;
@@ -188,6 +222,8 @@ export interface Media {
       mimeType?: string | null;
       filesize?: number | null;
       filename?: string | null;
+      prefix?: string | null;
+      _objectKey?: string | null;
     };
     large?: {
       url?: string | null;
@@ -196,6 +232,8 @@ export interface Media {
       mimeType?: string | null;
       filesize?: number | null;
       filename?: string | null;
+      prefix?: string | null;
+      _objectKey?: string | null;
     };
     xl?: {
       url?: string | null;
@@ -204,6 +242,8 @@ export interface Media {
       mimeType?: string | null;
       filesize?: number | null;
       filename?: string | null;
+      prefix?: string | null;
+      _objectKey?: string | null;
     };
   };
 }
@@ -213,6 +253,14 @@ export interface Media {
  */
 export interface User {
   id: number;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -313,6 +361,28 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-llm-instructions".
+ */
+export interface PayloadLlmInstruction {
+  id: string;
+  entitySlug: string;
+  title?: string | null;
+  entityType: 'collection' | 'global';
+  additionalInstructions?: string | null;
+  systemInstructions?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "units_select".
  */
 export interface UnitsSelect<T extends boolean = true> {
@@ -333,6 +403,8 @@ export interface UnitsSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -343,6 +415,10 @@ export interface UnitsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   seedKey?: T;
+  prefix?: T;
+  _objectKey?: T;
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -352,9 +428,21 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+  original?:
+    | T
+    | {
+        filename?: T;
+        url?: T;
+        mimeType?: T;
+        filesize?: T;
+        width?: T;
+        height?: T;
+        prefix?: T;
+        _objectKey?: T;
+      };
   focalX?: T;
   focalY?: T;
-  sizes?:
+  variants?:
     | T
     | {
         thumb?:
@@ -366,6 +454,8 @@ export interface MediaSelect<T extends boolean = true> {
               mimeType?: T;
               filesize?: T;
               filename?: T;
+              prefix?: T;
+              _objectKey?: T;
             };
         large?:
           | T
@@ -376,6 +466,8 @@ export interface MediaSelect<T extends boolean = true> {
               mimeType?: T;
               filesize?: T;
               filename?: T;
+              prefix?: T;
+              _objectKey?: T;
             };
         xl?:
           | T
@@ -386,6 +478,8 @@ export interface MediaSelect<T extends boolean = true> {
               mimeType?: T;
               filesize?: T;
               filename?: T;
+              prefix?: T;
+              _objectKey?: T;
             };
       };
 }
@@ -394,6 +488,8 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -454,6 +550,22 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-llm-instructions_select".
+ */
+export interface PayloadLlmInstructionsSelect<T extends boolean = true> {
+  id?: T;
+  entitySlug?: T;
+  title?: T;
+  entityType?: T;
+  additionalInstructions?: T;
+  systemInstructions?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site".
  */
 export interface Site {
@@ -491,6 +603,14 @@ export interface Site {
   footerContactTitle?: string | null;
   footerFollowTitle?: string | null;
   copyright?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -583,6 +703,14 @@ export interface Home {
     title?: string | null;
     description?: string | null;
   };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -619,6 +747,14 @@ export interface Stay {
     title?: string | null;
     description?: string | null;
   };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -660,6 +796,14 @@ export interface House {
     title?: string | null;
     description?: string | null;
   };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -707,6 +851,14 @@ export interface Gere {
     title?: string | null;
     description?: string | null;
   };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -736,6 +888,14 @@ export interface Gallery {
     title?: string | null;
     description?: string | null;
   };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -782,6 +942,14 @@ export interface Contact {
     title?: string | null;
     description?: string | null;
   };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -825,6 +993,8 @@ export interface SiteSelect<T extends boolean = true> {
   footerContactTitle?: T;
   footerFollowTitle?: T;
   copyright?: T;
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -937,6 +1107,8 @@ export interface HomeSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -983,6 +1155,8 @@ export interface StaySelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1034,6 +1208,8 @@ export interface HouseSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1091,6 +1267,8 @@ export interface GeresSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1126,6 +1304,8 @@ export interface GallerySelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1182,9 +1362,21 @@ export interface ContactSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "welcome_widget".
+ */
+export interface WelcomeWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1198,8 +1390,56 @@ export interface CollectionsWidget {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collection-query_widget".
+ */
+export interface CollectionQueryWidget {
+  data?: {
+    title?: string | null;
+    relatedCollection: 'units' | 'media' | 'users';
+    where?:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
+    sortField?: string | null;
+    sortDirection?: ('asc' | 'desc') | null;
+    limit?: number | null;
+  };
+  width: 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activity_widget".
+ */
+export interface ActivityWidget {
+  data?: {
+    excludedCollections?: ('units' | 'media' | 'users')[] | null;
+  };
+  width: 'small' | 'medium' | 'large' | 'x-large' | 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "upload-dropzone_widget".
+ */
+export interface UploadDropzoneWidget {
+  data?: {
+    excludedCollections?: 'media'[] | null;
+  };
+  width: 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
   [k: string]: unknown;
+}
+
+
+declare module 'payload' {
+  export interface GeneratedTypes extends Config {}
 }

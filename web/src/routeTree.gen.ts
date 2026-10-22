@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PayloadRouteImport } from './routes/_payload'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char123LangChar125RouteRouteImport } from './routes/{-$lang}/route'
@@ -18,7 +19,14 @@ import { Route as Char123LangChar125GalleryRouteImport } from './routes/{-$lang}
 import { Route as Char123LangChar125GeresRouteImport } from './routes/{-$lang}/geres'
 import { Route as Char123LangChar125HouseRouteImport } from './routes/{-$lang}/house'
 import { Route as Char123LangChar125StayRouteImport } from './routes/{-$lang}/stay'
+import { Route as PayloadAdminIndexRouteImport } from './routes/_payload/admin.index'
+import { Route as PayloadAdminSplatRouteImport } from './routes/_payload/admin.$'
+import { Route as PayloadApiSplatRouteImport } from './routes/_payload/api.$'
 
+const PayloadRoute = PayloadRouteImport.update({
+  id: '/_payload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
@@ -66,9 +74,25 @@ const Char123LangChar125StayRoute = Char123LangChar125StayRouteImport.update({
   path: '/stay',
   getParentRoute: () => Char123LangChar125RouteRoute,
 } as any)
+const PayloadAdminIndexRoute = PayloadAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => PayloadRoute,
+} as any)
+const PayloadAdminSplatRoute = PayloadAdminSplatRouteImport.update({
+  id: '/admin/$',
+  path: '/admin/$',
+  getParentRoute: () => PayloadRoute,
+} as any)
+const PayloadApiSplatRoute = PayloadApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
+  getParentRoute: () => PayloadRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/{-$lang}': typeof Char123LangChar125RouteRouteWithChildren
+  '/': typeof PayloadRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$lang}/contact': typeof Char123LangChar125ContactRoute
@@ -77,8 +101,12 @@ export interface FileRoutesByFullPath {
   '/{-$lang}/house': typeof Char123LangChar125HouseRoute
   '/{-$lang}/stay': typeof Char123LangChar125StayRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
+  '/admin/$': typeof PayloadAdminSplatRoute
+  '/api/$': typeof PayloadApiSplatRoute
+  '/admin/': typeof PayloadAdminIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof PayloadRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$lang}/contact': typeof Char123LangChar125ContactRoute
@@ -87,10 +115,14 @@ export interface FileRoutesByTo {
   '/{-$lang}/house': typeof Char123LangChar125HouseRoute
   '/{-$lang}/stay': typeof Char123LangChar125StayRoute
   '/{-$lang}': typeof Char123LangChar125IndexRoute
+  '/admin/$': typeof PayloadAdminSplatRoute
+  '/api/$': typeof PayloadApiSplatRoute
+  '/admin': typeof PayloadAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/{-$lang}': typeof Char123LangChar125RouteRouteWithChildren
+  '/_payload': typeof PayloadRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$lang}/contact': typeof Char123LangChar125ContactRoute
@@ -99,11 +131,15 @@ export interface FileRoutesById {
   '/{-$lang}/house': typeof Char123LangChar125HouseRoute
   '/{-$lang}/stay': typeof Char123LangChar125StayRoute
   '/{-$lang}/': typeof Char123LangChar125IndexRoute
+  '/_payload/admin/$': typeof PayloadAdminSplatRoute
+  '/_payload/api/$': typeof PayloadApiSplatRoute
+  '/_payload/admin/': typeof PayloadAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/{-$lang}'
+    | '/'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/{-$lang}/contact'
@@ -112,8 +148,12 @@ export interface FileRouteTypes {
     | '/{-$lang}/house'
     | '/{-$lang}/stay'
     | '/{-$lang}/'
+    | '/admin/$'
+    | '/api/$'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/{-$lang}/contact'
@@ -122,9 +162,13 @@ export interface FileRouteTypes {
     | '/{-$lang}/house'
     | '/{-$lang}/stay'
     | '/{-$lang}'
+    | '/admin/$'
+    | '/api/$'
+    | '/admin'
   id:
     | '__root__'
     | '/{-$lang}'
+    | '/_payload'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/{-$lang}/contact'
@@ -133,16 +177,27 @@ export interface FileRouteTypes {
     | '/{-$lang}/house'
     | '/{-$lang}/stay'
     | '/{-$lang}/'
+    | '/_payload/admin/$'
+    | '/_payload/api/$'
+    | '/_payload/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   Char123LangChar125RouteRoute: typeof Char123LangChar125RouteRouteWithChildren
+  PayloadRoute: typeof PayloadRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_payload': {
+      id: '/_payload'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PayloadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/robots.txt': {
       id: '/robots.txt'
       path: '/robots.txt'
@@ -206,6 +261,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LangChar125StayRouteImport
       parentRoute: typeof Char123LangChar125RouteRoute
     }
+    '/_payload/admin/': {
+      id: '/_payload/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof PayloadAdminIndexRouteImport
+      parentRoute: typeof PayloadRoute
+    }
+    '/_payload/admin/$': {
+      id: '/_payload/admin/$'
+      path: '/admin/$'
+      fullPath: '/admin/$'
+      preLoaderRoute: typeof PayloadAdminSplatRouteImport
+      parentRoute: typeof PayloadRoute
+    }
+    '/_payload/api/$': {
+      id: '/_payload/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof PayloadApiSplatRouteImport
+      parentRoute: typeof PayloadRoute
+    }
   }
 }
 
@@ -233,8 +309,24 @@ const Char123LangChar125RouteRouteWithChildren =
     Char123LangChar125RouteRouteChildren,
   )
 
+interface PayloadRouteChildren {
+  PayloadAdminSplatRoute: typeof PayloadAdminSplatRoute
+  PayloadApiSplatRoute: typeof PayloadApiSplatRoute
+  PayloadAdminIndexRoute: typeof PayloadAdminIndexRoute
+}
+
+const PayloadRouteChildren: PayloadRouteChildren = {
+  PayloadAdminSplatRoute: PayloadAdminSplatRoute,
+  PayloadApiSplatRoute: PayloadApiSplatRoute,
+  PayloadAdminIndexRoute: PayloadAdminIndexRoute,
+}
+
+const PayloadRouteWithChildren =
+  PayloadRoute._addFileChildren(PayloadRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   Char123LangChar125RouteRoute: Char123LangChar125RouteRouteWithChildren,
+  PayloadRoute: PayloadRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }

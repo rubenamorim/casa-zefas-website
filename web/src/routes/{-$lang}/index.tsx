@@ -23,7 +23,7 @@ export const Route = createFileRoute('/{-$lang}/')({
       name: 'Villa Zefas',
       description: page.meta?.description,
       url: SITE_URL + pathFor(locale, 'home'),
-      image: image?.url,
+      image: image?.url && SITE_URL + image.url,
       telephone: site?.phone,
       email: site?.email,
       address: { '@type': 'PostalAddress', streetAddress: site?.address, addressCountry: 'PT' },

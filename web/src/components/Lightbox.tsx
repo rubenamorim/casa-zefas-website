@@ -45,7 +45,7 @@ export function Lightbox({ title, photos, start = 0, onClose }: { title?: string
         <div className="flex h-full flex-1 items-center justify-center">
           {cur && (
             <img
-              src={cur.sizes?.xl?.url || cur.url!}
+              src={cur.variants?.xl?.url || cur.url!}
               alt={cur.alt ?? ''}
               className="max-h-full max-w-full rounded-[3px] object-contain shadow-[0_24px_60px_-28px_rgba(0,0,0,.7)]"
             />
@@ -70,7 +70,7 @@ export function Lightbox({ title, photos, start = 0, onClose }: { title?: string
                 j === i ? 'border-linen opacity-100' : 'border-transparent opacity-50'
               }`}
             >
-              <img src={p.sizes?.thumb?.url || p.url!} alt="" className="block size-full object-cover" />
+              <img src={p.variants?.thumb?.url || p.url!} alt="" className="block size-full object-cover" />
             </button>
           ))}
         </div>

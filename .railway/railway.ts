@@ -6,20 +6,21 @@ const region = 'europe-west4'
 export default defineRailway(() => {
   const db = postgres('postgres')
 
-  // Uploaded images. Private; cms serves them via /api/media/file/*.
+  // Uploaded images. Private; the app serves them via /api/media/file/*.
   const media = bucket('media', { region: 'ams' })
 
-  const cms = service('cms', {
-    source: github(repo, { branch: 'main', rootDirectory: 'cms' }),
+  // Site + Payload admin (/admin) + API (/api) in one TanStack Start app.
+  const web = service('web', {
+    source: github(repo, { branch: 'main', rootDirectory: 'web' }),
     build: 'pnpm build',
-    start: 'pnpm start', // runs migrations, then next start
+    start: 'pnpm start', // runs migrations, then the server
     replicas: { [region]: 1 },
-    domains: ['cms.casazefas.pt'],
+    domains: ['casazefas.pt'],
     env: {
       PORT: '3000',
+      VITE_SITE_URL: 'https://casazefas.pt',
       DATABASE_URL: db.env.DATABASE_URL,
       PAYLOAD_SECRET: preserve(), // set once in Railway dashboard, never in git
-      WEB_URL: 'https://casazefas.pt',
       BUCKET: ref(media, 'BUCKET'),
       ENDPOINT: ref(media, 'ENDPOINT'),
       REGION: ref(media, 'REGION'),
@@ -28,19 +29,5 @@ export default defineRailway(() => {
     },
   })
 
-  const web = service('web', {
-    source: github(repo, { branch: 'main', rootDirectory: 'web' }),
-    build: 'pnpm build',
-    start: 'pnpm start',
-    replicas: { [region]: 1 },
-    domains: ['casazefas.pt'],
-    env: {
-      PORT: '3000',
-      CMS_URL: 'http://${{cms.RAILWAY_PRIVATE_DOMAIN}}:3000',
-      CMS_PUBLIC_URL: 'https://cms.casazefas.pt',
-      VITE_SITE_URL: 'https://casazefas.pt',
-    },
-  })
-
-  return project('casa-zefas', { resources: [db, media, cms, web] })
+  return project('casa-zefas', { resources: [db, media, web] })
 })

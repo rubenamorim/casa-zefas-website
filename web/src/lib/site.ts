@@ -31,7 +31,8 @@ export function seo(args: {
   const { locale, page } = args
   const title = args.title || 'Villa Zefas'
   const url = SITE_URL + pathFor(locale, page)
-  const image = args.image?.sizes?.large?.url || args.image?.url
+  const rel = args.image?.variants?.large?.url || args.image?.url
+  const image = rel && (rel.startsWith('/') ? SITE_URL + rel : rel)
   return {
     meta: [
       { title },
